@@ -1,0 +1,24 @@
+<nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand text-white">WM</a>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/adminpanel">Admin Panel</a>
+      </li>
+    </ul>
+    <button class="btn btn-danger" (click)="onLogout()">Cerrar</button>
+  </nav>
+
+
+<div class="row">
+    <div class="col s6 offset-s3">
+      <div class="card">
+        <div class="card-image">
+          <img src="/assets/Img/403error.png" style="height:500px;width:700px;">  
+        </div>
+        <div class="card-content">
+          <span class="card-title" style="color:#039be5">403 - ACCESO DENEGADO</span>
+          <p>No tiene permisos para acceder al recurso.</p>
+        </div>
+      </div>
+    </div>
+  </div>

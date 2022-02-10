@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using DataAccess.Dtos.Incoming;
 using DataAccess.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -14,9 +15,10 @@ namespace ViveVolar.Api.Controllers.v1
     //[ApiVersion("1.0")]
     public class UserController : BaseController
     {
-        public UserController(IUnitOfWork unitOfWork) : base(unitOfWork)
+        public UserController(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
         }
+
 
         //GetAll
         [HttpGet]

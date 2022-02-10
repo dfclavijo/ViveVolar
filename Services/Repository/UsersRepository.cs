@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -12,9 +13,10 @@ namespace Services.Repository
 {
     public class UsersRepository : GenericRepository<User>, IUsersRepository
     {
-        public UsersRepository(ViveVolarDbContext context, ILogger logger) : base(context, logger)
+        public UsersRepository(ViveVolarDbContext context, ILogger logger, IMapper mapper) : base(context, logger, mapper)
         {
         }
+
         public override async Task<IEnumerable<User>> GetAll()
         {
             try

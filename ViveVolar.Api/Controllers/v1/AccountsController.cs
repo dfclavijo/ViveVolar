@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using DataAccess.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,7 @@ namespace ViveVolar.Api.Controllers.v1
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly JwtConfig _jwtConfig;
-        public AccountsController(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager, IOptionsMonitor<JwtConfig> optionMonitor) : base(unitOfWork)
+        public AccountsController(IUnitOfWork unitOfWork,IMapper mapper, UserManager<IdentityUser> userManager, IOptionsMonitor<JwtConfig> optionMonitor) : base(unitOfWork,mapper)
         {
             _userManager = userManager;
             _jwtConfig = optionMonitor.CurrentValue;
@@ -47,15 +48,19 @@ namespace ViveVolar.Api.Controllers.v1
                         }
                     });
                 }
-                //Add the User
+                //Add a Customer User
+                
                 var newUser = new IdentityUser()
                 {
                     Email = registrationdto.Email,
                     UserName = registrationdto.Email,
-                    EmailConfirmed = true
+                    EmailConfirmed = true,  
                 };
+               
 
                 var iscreated = await _userManager.CreateAsync(newUser,registrationdto.Password);
+                await _userManager.AddToRoleAsync(newUser, "Admin");
+                
                 if(!iscreated.Succeeded) // Registration Fail
                 {
                     return BadRequest(new UserRegistrationResponse()
@@ -136,7 +141,7 @@ namespace ViveVolar.Api.Controllers.v1
                 }
                 else
                 {
-                    //Password wrong
+                    //Password is Wrong
                     return BadRequest(new UserLoginResponse()
                     {
                         Success = false,

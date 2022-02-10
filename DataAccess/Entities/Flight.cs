@@ -7,25 +7,23 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Entities
 {
-    public class User : BaseEntity
+    [Table("Flights")]
+    public class Flight : BaseEntity
     {
-        public User(){
+        public Flight(){
             Bookings = new HashSet<Booking>();
         }
-        
+
         [Key]
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("UserId")]
+        [Column("FlightId")]
         public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public string Phone { get; set; }
-        public DateTime DateOfBirth { get; set; }
-        public string Country { get; set; }
+        public string DepartureStation { get; set; }
+        public string ArrivalStation { get; set; }
+        public DateTime DepartureDate { get; set; }
+        public decimal Price { get; set; }
         public ICollection<Booking> Bookings { get; set; }
-        
-            
+
     }
 }

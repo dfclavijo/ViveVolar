@@ -17,7 +17,7 @@ namespace DataAccess.Configuration
             entityBuilder.Property(u=> u.FirstName).IsRequired().HasMaxLength(100);
             entityBuilder.Property(u=> u.LastName).IsRequired().HasMaxLength(100);
             entityBuilder.Property(u=> u.Email).IsRequired().HasMaxLength(100);
-            entityBuilder.Property(u=> u.DateOfBirth).IsRequired();
+            entityBuilder.Property(u=> u.DateOfBirth).IsRequired();         
             
         }
     }

@@ -37,23 +37,29 @@ namespace ViveVolar.Api
 
             services.AddControllers();
 
-            //API Versioning
-            services.AddApiVersioning(opt =>
-            {
-                opt.ReportApiVersions = true;
-                opt.AssumeDefaultVersionWhenUnspecified = true;
-                opt.DefaultApiVersion = ApiVersion.Default;
-            });
-            
+                //API Versioning
+                services.AddApiVersioning(opt =>
+                {
+                    opt.ReportApiVersions = true;
+                    opt.AssumeDefaultVersionWhenUnspecified = true;
+                    opt.DefaultApiVersion = ApiVersion.Default;
+                });
+                
 
-            //DataBase Connection Managment
-            services.AddDbContext<ViveVolarDbContext>(options =>
-            options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+                //DataBase Connection Managment
+                services.AddDbContext<ViveVolarDbContext>(options =>
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
-            // Access via Interface
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-            //  API Authentication Using JWT Bearer Token
+                // Access via Interface
+                services.AddScoped<IUnitOfWork, UnitOfWork>();
+                
+                //  Automapper
+                services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+                      
+                //User Interface
+                services.AddCors();
+     
+                //  API Authentication Using JWT Bearer Token
                 services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
 
                 services.AddAuthentication(options =>
@@ -78,7 +84,20 @@ namespace ViveVolar.Api
                 //  Identity Managment
                 services.AddDefaultIdentity<IdentityUser>(options =>
                 options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ViveVolarDbContext>();
+
+                //Passwords Managment
+                services.Configure<IdentityOptions>(options =>
+                {
+                    options.Password.RequireDigit = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequiredLength = 4;
+                }
+                
+           );
 
             services.AddSwaggerGen(c =>
             {
@@ -103,6 +122,13 @@ namespace ViveVolar.Api
             app.UseAuthorization();
 
             app.UseAuthentication();
+            
+            //Allowing CORS
+            app.UseCors(builder =>
+            builder.WithOrigins(Configuration["ApplicationSetup:Client_URL"].ToString())
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            );
 
             app.UseEndpoints(endpoints =>
             {

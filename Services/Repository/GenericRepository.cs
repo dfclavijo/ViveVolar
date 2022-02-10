@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Services.Data;
 using Services.IRepository;
 using Microsoft.Extensions.Logging;
+using AutoMapper;
 
 namespace Services.Repository
 {
@@ -16,12 +17,14 @@ namespace Services.Repository
         protected ViveVolarDbContext _context;
         internal DbSet<T> dbSet;
         protected ILogger _logger;
+        public readonly IMapper _mapper;
 
-        public GenericRepository(ViveVolarDbContext context, ILogger logger)
+        public GenericRepository(ViveVolarDbContext context, ILogger logger,IMapper mapper)
         {
             _context = context;
             dbSet = context.Set<T>(); 
             _logger = logger;
+            _mapper = mapper;
         }
         public virtual async Task<bool> Add(T entity)
         {

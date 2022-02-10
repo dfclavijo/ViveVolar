@@ -9,6 +9,8 @@ namespace Services.IConfiguration
     public interface IUnitOfWork
     {
         IUsersRepository Users {get;}
+        IBookingsRepository Bookings {get;}
+        IFlightsRepository Flights {get;}
 
         Task CompleteAsync();
     }

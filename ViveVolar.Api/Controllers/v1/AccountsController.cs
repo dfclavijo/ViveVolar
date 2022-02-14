@@ -186,7 +186,7 @@ namespace ViveVolar.Api.Controllers.v1
                    new Claim(JwtRegisteredClaimNames.Email, user.Email),
                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                }),
-               Expires = DateTime.UtcNow.AddDays(3),
+               Expires = DateTime.UtcNow.Add(_jwtConfig.ExpireTime),
                SigningCredentials = new SigningCredentials(
                    new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature
                )

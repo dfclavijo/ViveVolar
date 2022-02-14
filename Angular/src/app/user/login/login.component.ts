@@ -13,7 +13,7 @@ import { UserService } from '../../shared/user.service';
 export class LoginComponent implements OnInit {
 
   formModel = {
-    UserName : '',
+    Email : '',
     Password : ''
   }
   

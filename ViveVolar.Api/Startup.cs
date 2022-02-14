@@ -45,7 +45,6 @@ namespace ViveVolar.Api
                     opt.DefaultApiVersion = ApiVersion.Default;
                 });
                 
-
                 //DataBase Connection Managment
                 services.AddDbContext<ViveVolarDbContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
@@ -62,16 +61,10 @@ namespace ViveVolar.Api
                 //  API Authentication Using JWT Bearer Token
                 services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
 
-                services.AddAuthentication(options =>
-                {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-
-                }).AddJwtBearer(jwt => {
+                //Token from Secret
                 var key = Encoding.ASCII.GetBytes(Configuration["JwtConfig:Secret"]);
-                jwt.SaveToken = true;
-                jwt.TokenValidationParameters = new TokenValidationParameters{
+
+                var TokenValidationParameters = new TokenValidationParameters{
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
@@ -79,7 +72,19 @@ namespace ViveVolar.Api
                     RequireExpirationTime = false,
                     ValidateLifetime = true,
                 };
+
+                services.AddAuthentication(options =>
+                {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+                }).AddJwtBearer(jwt => {
+                jwt.SaveToken = true;
+                jwt.TokenValidationParameters = TokenValidationParameters;
                 });
+
+                
 
                 //  Identity Managment
                 services.AddDefaultIdentity<IdentityUser>(options =>

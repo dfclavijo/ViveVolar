@@ -11,9 +11,14 @@
     <div class="col-md-6">
       <form [formGroup]="service.formModel" autocomplete="off" (submit)="onSubmit()">
         <div class="form-group required">
-          <label>UserName</label>
-          <input class="form-control" formControlName="UserName">
-          <label class="text-danger" *ngIf="service.formModel.get('UserName').touched && service.formModel.get('UserName').errors?.required">Este campo es obligatorio</label>
+          <label>FirstName</label>
+          <input class="form-control" formControlName="FirstName">
+          <label class="text-danger" *ngIf="service.formModel.get('FirstName').touched && service.formModel.get('FirstName').errors?.required">Este campo es obligatorio</label>
+        </div>
+        <div class="form-group required">
+          <label>LastName</label>
+          <input class="form-control" formControlName="LastName">
+          <label class="text-danger" *ngIf="service.formModel.get('LastName').touched && service.formModel.get('LastName').errors?.required">Este campo es obligatorio</label>
         </div>
         <div class="form-group">
           <label>Email</label>

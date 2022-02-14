@@ -8,11 +8,12 @@ import { HttpClient, HttpHeaders} from "@angular/common/http";
 export class UserService {
 
   constructor(private fb:FormBuilder, private http:HttpClient) { }
-  readonly BaseURI = 'https://vivevolar.herokuapp.com/api/v1';
+  readonly BaseURI = 'https://localhost:5001/api/v1';
 
 
   formModel = this.fb.group({
-    UserName: ['', Validators.required],
+    FirstName: ['', Validators.required],
+    LastName: ['', Validators.required],
     Email: ['', Validators.email],
     Passwords: this.fb.group({
       Password: ['', [Validators.required, Validators.minLength(4)]],
@@ -37,15 +38,15 @@ export class UserService {
 
   register() {
     var body = {
-      UserName: this.formModel.value.UserName,
       FirstName: this.formModel.value.FirstName,
       LastName: this.formModel.value.LastName,
-      Address: this.formModel.value.Address,
-      BirthDate: this.formModel.value.BirthDate,
       Email: this.formModel.value.Email,
-      PhoneNumber: this.formModel.value.PhoneNumber,
       Password: this.formModel.value.Passwords.Password
+      
     };
+    err => {
+      console.log(err);
+    }
     return this.http.post(this.BaseURI + '/Accounts/Register', body);
   }
 
@@ -54,7 +55,7 @@ export class UserService {
   }
   getUserProfile(){
     var tokenHeader= new HttpHeaders({'Authorization':'Bearer' +localStorage.getItem('token')})
-    return this.http.get(this.BaseURI+ '/UserProfile',{headers : tokenHeader});
+    return this.http.get(this.BaseURI + '/UserProfile',{headers : tokenHeader});
   }
   
   roleMatch(allowedRoles): boolean {

@@ -8,7 +8,7 @@ import { HttpClient, HttpHeaders} from "@angular/common/http";
 export class UserService {
 
   constructor(private fb:FormBuilder, private http:HttpClient) { }
-  readonly BaseURI = 'https://localhost:5001/api/v1';
+  readonly BaseURI = 'https://vivevolar.herokuapp.com/api/v1';
 
 
   formModel = this.fb.group({

@@ -21,6 +21,16 @@ namespace ViveVolar.Api.Controllers.v1
             var lstBookings = await _unitOfWork.Bookings.GetAll();
             return Ok(lstBookings);
         }
+        
+        //Get
+        [HttpGet]
+        [Route ("GetBookingsByCustomer", Name= "GetBookingsByCustomer")]
+        public async Task<IActionResult> GetBookingsByCustomer(int id)
+        {
+            var lstBookings = await _unitOfWork.Bookings.GetBookingsByCustomer(id);
+            return Ok(lstBookings);
+        }
+
         //GetById
         [HttpGet]
         [Route ("GetBookingById", Name= "GetBookingById")]

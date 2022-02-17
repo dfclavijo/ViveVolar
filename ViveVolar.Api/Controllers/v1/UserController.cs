@@ -27,6 +27,14 @@ namespace ViveVolar.Api.Controllers.v1
             var users = await _unitOfWork.Users.GetAll();
             return Ok(users);       
         }
+        //GetAllUsersBook
+        [HttpGet]
+        [Route("GetAllWithBookings", Name = "GetAllWithBookings")]
+        public async Task<IActionResult> GetAllWithBookings()
+        {
+            var users = await _unitOfWork.Users.GetAllWithBookings();
+            return Ok(users);       
+        }
 
         
         //GetById

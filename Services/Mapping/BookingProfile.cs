@@ -19,7 +19,7 @@ namespace Services.Mapping
              CreateMap<BookingOutput,Booking >().ReverseMap()
                 .ForMember(d => d.UserName, s => s.MapFrom(x => x.UserNavigation.FirstName))
                 .ForMember(d => d.LastName, s => s.MapFrom(x => x.UserNavigation.LastName))
-                .ForMember(d => d.DepartureDate, s => s.MapFrom(x => x.FlightNavigation.DepartureStation))
+                .ForMember(d => d.DepartureStation, s => s.MapFrom(x => x.FlightNavigation.DepartureStation))
                 .ForMember(d => d.ArrivalStation, s => s.MapFrom(x => x.FlightNavigation.ArrivalStation))
                 .ForMember(d => d.DepartureDate, s => s.MapFrom(x => x.FlightNavigation.DepartureDate));
            

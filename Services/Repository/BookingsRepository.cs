@@ -42,7 +42,9 @@ namespace Services.Repository
             try
             {
 
-                 var query =  await dbSet.Where(x => x.UserId == userId)                                
+                 var query =  await dbSet.Where(x => x.UserId == userId)
+                                    .Include(x=> x.UserNavigation)   
+                                    .Include(x=> x.FlightNavigation)
                                     .AsNoTracking()
                                     .ToListAsync();
                 var outbookin = query.Select(x => _mapper.Map<BookingOutput>(x));

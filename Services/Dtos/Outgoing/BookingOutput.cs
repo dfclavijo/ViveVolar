@@ -18,8 +18,8 @@ namespace Services.Dtos.Outgoing
         public string DepartureStation { get; set; }
         public string ArrivalStation { get; set; }
         public DateTime DepartureDate { get; set; }  
-        public User UserNavigation { get; set; }
-        public Flight FlightNavigation { get; set; }     
+        //public User UserNavigation { get; set; }
+        //public Flight FlightNavigation { get; set; }     
        
     }
 }

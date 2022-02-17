@@ -7,6 +7,7 @@ using DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Services.Data;
+using Services.Dtos.Outgoing;
 using Services.IRepository;
 
 namespace Services.Repository
@@ -29,6 +30,24 @@ namespace Services.Repository
             {
                 _logger.LogError(ex, "{Repo} All method has generated an error", typeof(UsersRepository));
                 return new List<User>();
+            }
+        }
+
+        public async Task<IEnumerable<UserOutput>> GetAllWithBookings()
+        {
+             try
+            {
+                var query =  await dbSet.Where(x => x.status == 1)
+                                    .Include(x=> x.Bookings)
+                                    .AsNoTracking()
+                                    .ToListAsync();
+                var outuserbookin = query.Select(x => _mapper.Map<UserOutput>(x));
+                return outuserbookin;
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "{Repo} All method has generated an error", typeof(UsersRepository));
+                return new List<UserOutput>();
             }
         }
     }

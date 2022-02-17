@@ -39,6 +39,7 @@ namespace Services.Repository
             {
                 var query =  await dbSet.Where(x => x.status == 1)
                                     .Include(x=> x.Bookings)
+                                    .ThenInclude(x=> x.FlightNavigation)
                                     .AsNoTracking()
                                     .ToListAsync();
                 var outuserbookin = query.Select(x => _mapper.Map<UserOutput>(x));

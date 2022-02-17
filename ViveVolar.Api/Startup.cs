@@ -104,9 +104,24 @@ namespace ViveVolar.Api
                 
            );
 
+           //Develop Environment
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ViveVolar.Api", Version = "v1" });
+            });
+            
+            //Production Environment
+
+            services.AddCors(options =>
+            {
+            options.AddPolicy("AllowAllHeaders",
+                builder =>
+            {
+                    builder.AllowAnyOrigin()
+                           .AllowAnyHeader()
+                           .AllowAnyMethod();
+                });
             });
         }
 
